@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class HotelRates extends Model
+class HotelStayRatesHistory extends Model
 {
-    protected $fillable = ['hotel_id', 'date_of_stay', 'rate'];
+    use UuidTrait;
 
-    public function customer(): BelongsTo
-    {
-        return $this->belongsTo(Customer::class);
-    }
+    protected $fillable = ['hotel_name', 'date_of_stay', 'date_scraped', 'rate_per_night', 'old_uuid'];
 
     public function hotel(): BelongsTo
     {
