@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('customer_hotel_stay_rates', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('customer_id')->index('customer_id_idx');
-            $table->uuid('hotel_id')->index('customer_id_idx');;
+            $table->uuid('hotel_id')->index('hotel_id_idx');;
             $table->dateTime('date_of_stay');
             $table->unsignedInteger('rate')->index('rate_idx');;
             $table->timestamps();
