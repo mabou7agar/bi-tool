@@ -7,9 +7,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CustomerHotelStayRates extends Model
+class HotelRates extends Model
 {
-    protected $fillable = ['customer_id', 'hotel_id', 'date_of_stay', 'rate'];
+    protected $fillable = ['hotel_id', 'date_of_stay', 'rate'];
 
     public function customer(): BelongsTo
     {
