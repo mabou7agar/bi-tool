@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customer_hotel_scraped_data');
+        Schema::dropIfExists('hotel_stay_rates_histories');
     }
 };
