@@ -13,13 +13,18 @@ class HotelsService
     {
     }
 
-    public function paginate($page = 1,$perPage = 15)
+    public function paginate($page = 1, $perPage = 15)
     {
-        return $this->hotelRepository->paginatedList([],$page,$perPage);
+        return $this->hotelRepository->paginatedList([], $page, $perPage);
     }
 
     public function get(UuidInterface $id)
     {
         return $this->hotelRepository->findOneOrFail($id);
+    }
+
+    public function count(): int
+    {
+        return $this->hotelRepository->count();
     }
 }
