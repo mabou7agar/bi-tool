@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('hotel_stay_rates', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('hotel_name')->index('hotel_name_idx');
-            $table->dateTime('date_of_stay')->index('date_of_stay_idx');;
-            $table->unsignedInteger('rate_per_night');
+            $table->dateTime('date_of_stay')->index('date_of_stay_idx');
+            $table->dateTime('date_scraped')->index('date_scraped_idx');
+            $table->unsignedDouble('rate_per_night');
             $table->timestamps();
         });
     }
