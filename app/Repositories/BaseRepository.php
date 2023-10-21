@@ -104,7 +104,7 @@ class BaseRepository
         array $conditions = [],
         int $page = 1,
         int $perPage = 15,
-        string $orderBy = 'id',
+        string $orderBy = 'created_at',
         string $sortBy = 'asc',
     ) {
         return $this->model->where($conditions)
@@ -149,6 +149,14 @@ class BaseRepository
     public function countBy(array $data)
     {
         return $this->model->where($data)->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return $this->model->count();
     }
 
     public function findByWithRelations(array $data, array $relations = [])
