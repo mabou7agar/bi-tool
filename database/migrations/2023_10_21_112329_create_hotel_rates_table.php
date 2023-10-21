@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer_hotel_stay_rates', function (Blueprint $table) {
+        Schema::create('hotel_stay_rates', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('customer_id')->index('customer_id_idx');
-            $table->uuid('hotel_id')->index('hotel_id_idx');;
-            $table->dateTime('date_of_stay');
-            $table->unsignedInteger('rate')->index('rate_idx');;
+            $table->string('hotel_name')->index('hotel_name_idx');
+            $table->dateTime('date_of_stay')->index('date_of_stay_idx');;
+            $table->unsignedInteger('rate_per_night');
             $table->timestamps();
         });
     }

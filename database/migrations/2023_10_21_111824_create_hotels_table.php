@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name')->index('hotel_name_idx');
+            $table->string('name')->unique()->index('hotel_name_idx');
             $table->timestamps();
             $table->softDeletes();
         });
