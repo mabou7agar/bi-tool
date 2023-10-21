@@ -6,7 +6,6 @@ namespace App\Models;
 
 use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Hotel extends Model
@@ -17,6 +16,6 @@ class Hotel extends Model
 
     public function rates(): HasMany
     {
-        return $this->hasMany(HotelRates::class);
+        return $this->hasMany(HotelStayRate::class, 'hotel_name', 'name');
     }
 }
