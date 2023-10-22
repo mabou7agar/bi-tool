@@ -45,7 +45,7 @@ class HotelRateChart extends ApexChartWidget
         $chartRates = [];
         foreach ($historyRates as $rate) {
             $chartRates[] = $rate->rate_per_night;
-            $dates[] = $rate->date_scraped;
+            $dates[] = $rate->date_scraped->format('D,d-M-Y');
         }
 
         return [

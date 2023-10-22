@@ -36,7 +36,7 @@ class HotelStayRateResource extends Resource
         return $table
             ->columns([
                           Tables\Columns\TextColumn::make('hotel_name'),
-                          Tables\Columns\TextColumn::make('date_scraped')->date()->sortable(),
+                          Tables\Columns\TextColumn::make('date_scraped')->date('Y-m-d')->sortable(),
                           Tables\Columns\TextColumn::make('rate_per_night'),
                       ])
             ->filters(
