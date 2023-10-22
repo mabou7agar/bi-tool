@@ -35,10 +35,10 @@ class ScrapeHotelJob implements ShouldQueue
             $scrapedData = $generateScrapeService->generate($hotel->name);
             $hotel->rates()
                 ->where('hotel_name', $hotel->name)
-                ->where('date_of_stay', Carbon::tomorrow())->delete();
+                ->where('date_scraped', Carbon::today())->delete();
             /** @var ScrapedItem $scrapedItem */
             foreach ($scrapedData as $scrapedItem) {
-                if ($scrapedItem->getDateScraped() == Carbon::tomorrow()) {
+                if ($scrapedItem->getDateScraped() == Carbon::today()) {
                     $hotel->rates()->create($scrapedItem->toArray());
                     continue;
                 }
