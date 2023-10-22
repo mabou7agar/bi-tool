@@ -9,9 +9,16 @@ ARG POSTGRES_VERSION=15
 WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV TZ=UTC
+ENV TZ=EST
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt-get update \
+    && apt-get install -y cron
+
+COPY scheduler /etc/cron.d/scheduler
+RUN chmod 0644 /etc/cron.d/scheduler \
+    && crontab /etc/cron.d/scheduler
 
 RUN apt-get update \
     && mkdir -p /etc/apt/keyrings \
