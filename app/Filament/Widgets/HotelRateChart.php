@@ -5,12 +5,14 @@ namespace App\Filament\Widgets;
 use App\Services\HotelsService;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class HotelRateChart extends ApexChartWidget
 {
     public ?string $filter = 'A';
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
+     protected static ?string $pollingInterval = null;
     /**
      * Chart Id
      *
@@ -35,17 +37,15 @@ class HotelRateChart extends ApexChartWidget
     {
         /** @var HotelsService $hotelsService */
         $hotelsService = app()->make(HotelsService::class);
-        $hotel = $hotelsService->getByName($this->filter);
-        $rates = $hotel->rates()->where('date_of_stay', '>=', $this->filterFormData['date_of_stay'])->get();
-        $dateOfStay = Carbon::createFromFormat('Y-m-d', $this->filterFormData['date_of_stay']);
+        $hotel = $hotelsService->getByName($this->filterFormData['hotel_name'] ?? 'A');
 
+        $rate = $hotel->rates()->where('date_of_stay', '=', $this->filterFormData['date_of_stay'])->first();
+        $historyRates = $rate?->histories()->orderBy('date_scraped', 'asc')->get() ?? [];
         $dates = [];
         $chartRates = [];
-        for ($i = 0 ; $i < 365 ; $i++) {
-            $dates[] = $dateOfStay->addDay()->format('Y-m-d');
-        }
-        foreach ($rates as $rate) {
+        foreach ($historyRates as $rate) {
             $chartRates[] = $rate->rate_per_night;
+            $dates[] = $rate->date_scraped;
         }
 
         return [
@@ -81,9 +81,9 @@ class HotelRateChart extends ApexChartWidget
         ];
     }
 
-    protected function getFilters(): ?array
+
+    protected function getFormSchema(): array
     {
-        /** @var HotelsService $hotelsService */
         $hotelsService = app()->make(HotelsService::class);
         $hotels = $hotelsService->getAll();
         $names = [];
@@ -91,14 +91,10 @@ class HotelRateChart extends ApexChartWidget
             $names[$hotel->name] = $hotel->name;
         }
 
-        return $names;
-    }
-
-    protected function getFormSchema(): array
-    {
         return [
             DatePicker::make('date_of_stay')
                 ->default(Carbon::today()),
+            Select::make('hotel_name')->default('A')->options($names),
         ];
     }
 }
