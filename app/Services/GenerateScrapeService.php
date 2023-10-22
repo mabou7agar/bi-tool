@@ -17,7 +17,7 @@ class GenerateScrapeService
             $result->add(
                 new ScrapedItem(
                     name:         $hotelName,
-                    dateScraped:  Carbon::tomorrow(),
+                    dateScraped:  Carbon::today(),
                     dateOfStay:   Carbon::today()->addDays($i),
                     ratePerNight: rand(100, 200)
                 )

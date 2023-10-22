@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Entities\ScrapedItem;
+use App\Models\Hotel;
 use App\Services\GenerateScrapeService;
 use App\Services\HotelsService;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -25,19 +27,25 @@ class ScrapeHotelJob implements ShouldQueue
     {
     }
 
-    public function handle(HotelsService $hotelsService,GenerateScrapeService $generateScrapeService){
-        $hotels = $hotelsService->paginate($this->page,$this->perPage);
+    public function handle(HotelsService $hotelsService, GenerateScrapeService $generateScrapeService)
+    {
+        $hotels = $hotelsService->paginate($this->page, $this->perPage);
+        /** @var Hotel $hotel */
         foreach ($hotels as $hotel) {
             $scrapedData = $generateScrapeService->generate($hotel->name);
+            $hotel->rates()
+                ->where('hotel_name', $hotel->name)
+                ->where('date_of_stay', Carbon::tomorrow())->delete();
             /** @var ScrapedItem $scrapedItem */
             foreach ($scrapedData as $scrapedItem) {
-                $hotel->rates()->updateOrCreate(
-                    [
-                        'hotel_name' => $scrapedItem->getName(),
-                        'date_of_stay' => $scrapedItem->getDateOfStay()
-                    ],
-                    $scrapedItem->toArray()
-                );
+                if ($scrapedItem->getDateScraped() == Carbon::tomorrow()) {
+                    $hotel->rates()->create($scrapedItem->toArray());
+                    continue;
+                }
+                $hotel->rates()
+                    ->where('hotel_name', $scrapedItem->getName())
+                    ->where('date_of_stay', $scrapedItem->getDateOfStay())
+                    ->update($scrapedItem->toArray());
             }
         }
     }

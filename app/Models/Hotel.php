@@ -12,7 +12,7 @@ class Hotel extends Model
 {
     use UuidTrait;
 
-    const HOTELS_PER_PAGE = 10;
+    const HOTELS_PER_PAGE = 2;
     protected $fillable = ['name'];
 
     public function rates(): HasMany

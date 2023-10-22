@@ -108,7 +108,8 @@ class BaseRepository
         string $sortBy = 'asc',
     ) {
         return $this->model->where($conditions)
-            ->forPage($page, max($perPage, 50))
+            ->offset($perPage * ($page - 1))
+            ->limit($perPage)
             ->orderBy($orderBy, $sortBy)
             ->get();
     }
