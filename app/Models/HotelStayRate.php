@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\Traits\UuidTrait;
+use App\Observers\HotelStayRateObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,21 +22,6 @@ class HotelStayRate extends Model
         'date_of_stay' => 'date',
         'date_scraped' => 'date'
     ];
-
-    protected static function booted()
-    {
-        parent::booted();
-        static::updated(function ($item) {
-            $changes = $item->getChanges();
-            if (!empty($changes['rate_per_night'])) {
-                $original = $item->original;
-                $original['old_uuid'] = $original['id'];
-                unset($original['id']);
-                unset($original['updated_at']);
-                HotelStayRatesHistory::create($original);
-            }
-        });
-    }
 
     public function hotel(): BelongsTo
     {
