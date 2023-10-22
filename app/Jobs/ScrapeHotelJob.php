@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Entities\ScrapedItem;
+use App\Handlers\CreateRateHistoryHandler;
 use App\Models\Hotel;
 use App\Services\GenerateScrapeService;
 use App\Services\HotelsService;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -31,22 +31,13 @@ class ScrapeHotelJob implements ShouldQueue
     {
         $hotels = $hotelsService->paginate($this->page, $this->perPage);
         /** @var Hotel $hotel */
-        foreach ($hotels as $hotel) {
+        foreach ($hotels->getItems() as $hotel) {
             $scrapedData = $generateScrapeService->generate($hotel->name);
-            $hotel->rates()
-                ->where('hotel_name', $hotel->name)
-                ->where('date_scraped', Carbon::today())->delete();
             /** @var ScrapedItem $scrapedItem */
             foreach ($scrapedData as $scrapedItem) {
-                if ($scrapedItem->getDateScraped() == Carbon::today()) {
-                    $hotel->rates()->create($scrapedItem->toArray());
-                    continue;
-                }
-                $hotel->rates()
-                    ->where('hotel_name', $scrapedItem->getName())
-                    ->where('date_of_stay', $scrapedItem->getDateOfStay())
-                    ->update($scrapedItem->toArray());
+                    $hotel->rates()->updateOrCreate($scrapedItem->toArray());
             }
+            (new CreateRateHistoryHandler())->handle();
         }
     }
 }
