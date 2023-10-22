@@ -12,7 +12,7 @@ class ScrapedItem
         private string $name,
         private Carbon $dateScraped,
         private Carbon $dateOfStay,
-        private int $ratePerNight
+        private float $ratePerNight
     ) {
     }
 
@@ -48,6 +48,30 @@ class ScrapedItem
         return $this->ratePerNight;
     }
 
+    /**
+     * @param float $ratePerNight
+     */
+    public function setRatePerNight(float $ratePerNight): void
+    {
+        $this->ratePerNight = $ratePerNight;
+    }
+
+    /**
+     * @param Carbon $dateScraped
+     */
+    public function setDateScraped(Carbon $dateScraped): void
+    {
+        $this->dateScraped = $dateScraped;
+    }
+
+    /**
+     * @param Carbon $dateOfStay
+     */
+    public function setDateOfStay(Carbon $dateOfStay): void
+    {
+        $this->dateOfStay = $dateOfStay;
+    }
+
     public function toArray(): array
     {
         return [
@@ -57,4 +81,5 @@ class ScrapedItem
             'date_scraped' => $this->dateScraped,
         ];
     }
+
 }
