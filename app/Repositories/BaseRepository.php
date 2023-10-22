@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Entities\PaginatedData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -100,6 +101,7 @@ class BaseRepository
      *
      * @return mixed
      */
+    //We Can use default paginate function without doing this, but it causes performance issue with large data
     public function paginatedList(
         array $conditions = [],
         int $page = 1,
@@ -107,11 +109,14 @@ class BaseRepository
         string $orderBy = 'created_at',
         string $sortBy = 'asc',
     ) {
-        return $this->model->where($conditions)
+        $query =  $this->model->where($conditions);
+        $count = $query->count();
+        $result = $query
             ->offset($perPage * ($page - 1))
             ->limit($perPage)
             ->orderBy($orderBy, $sortBy)
             ->get();
+        return new PaginatedData($count,$result);
     }
 
     /**

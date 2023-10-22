@@ -17,8 +17,8 @@ class GetHotelStayRateHistoriesPresenter extends AbstractPresenter
         return [
             'id' => $this->hotelStayRatesHistory->id,
             'name' => $this->hotelStayRatesHistory->hotel_name,
-            'date_of_stay' => $this->hotelStayRatesHistory->date_of_stay->format('Y-m-d'),
-            'date_scraped' => $this->hotelStayRatesHistory->date_scraped->format('Y-m-d'),
+            'date_of_stay' => $this->hotelStayRatesHistory->date_of_stay,
+            'date_scraped' => $this->hotelStayRatesHistory->date_scraped,
         ];
     }
 }

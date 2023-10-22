@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HotelStayRateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('/v1')->group(function () {
+Route::prefix('/v1')->middleware('auth:api')->group(function () {
     Route::get('/hotel/histories', [HotelStayRateController::class, 'histories']);
 });
+
+Route::group(
+    [
+        'middleware' => 'api',
+        'prefix' => '/v1/auth'
+    ],
+    function ($router) {
+        Route::post('login', [AuthController::class, 'login']);
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('refresh', [AuthController::class, 'refresh']);
+        Route::post('me', [AuthController::class, 'me']);
+    }
+);

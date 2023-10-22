@@ -10,15 +10,15 @@ abstract class AbstractPresenter
     {
         $result = [];
         foreach ($collection as $item) {
-            $result[] = (new static($item, ...$additionalParams))->getData(isListing: true);
+            $result[] = (new static($item, ...$additionalParams))->getData();
         }
 
         return $result;
     }
 
-    public function getData(bool $isListing = false): array
+    public function getData(): array
     {
-        return $this->present($isListing);
+        return $this->present();
     }
 
     abstract protected function present(): array;

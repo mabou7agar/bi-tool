@@ -30,3 +30,5 @@ sail up
 ```bash
  sail artisan queue:work  
 ```
+
+php artisan jwt:secret

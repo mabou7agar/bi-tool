@@ -13,7 +13,7 @@ class HotelStayRateService
     {
     }
 
-    public function getHistories(GetHotelStayRateHistoriesDTO $getHotelStayRateHistoriesDTO)
+    public function getPaginatedHistories(GetHotelStayRateHistoriesDTO $getHotelStayRateHistoriesDTO)
     {
         return $this->hotelStayRateRepository->paginatedList(
             [
