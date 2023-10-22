@@ -23,6 +23,16 @@ class HotelsService
         return $this->hotelRepository->findOneOrFail($id);
     }
 
+    public function getByName(string $name)
+    {
+        return $this->hotelRepository->findOneByOrFail(['name' => $name]);
+    }
+
+    public function getAll()
+    {
+        return $this->hotelRepository->all();
+    }
+
     public function count(): int
     {
         return $this->hotelRepository->count();

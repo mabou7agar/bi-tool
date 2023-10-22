@@ -2,12 +2,15 @@
 
 namespace App\Filament\Widgets;
 
+use App\Services\HotelsService;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class HotelRateChart extends ApexChartWidget
 {
+    public ?string $filter = 'A';
+    protected int | string | array $columnSpan = 'full';
     /**
      * Chart Id
      *
@@ -20,7 +23,7 @@ class HotelRateChart extends ApexChartWidget
      *
      * @var string|null
      */
-    protected static ?string $heading = 'HotelRateChart';
+    protected static ?string $heading = 'Hotel Rate Chart';
 
     /**
      * Chart options (series, labels, types, size, animations...)
@@ -30,19 +33,34 @@ class HotelRateChart extends ApexChartWidget
      */
     protected function getOptions(): array
     {
+        /** @var HotelsService $hotelsService */
+        $hotelsService = app()->make(HotelsService::class);
+        $hotel = $hotelsService->getByName($this->filter);
+        $rates = $hotel->rates()->where('date_of_stay', '>=', $this->filterFormData['date_of_stay'])->get();
+        $dateOfStay = Carbon::createFromFormat('Y-m-d', $this->filterFormData['date_of_stay']);
+
+        $dates = [];
+        $chartRates = [];
+        for ($i = 0 ; $i < 365 ; $i++) {
+            $dates[] = $dateOfStay->addDay()->format('Y-m-d');
+        }
+        foreach ($rates as $rate) {
+            $chartRates[] = $rate->rate_per_night;
+        }
+
         return [
             'chart' => [
                 'type' => 'line',
-                'height' => 300,
+                'height' => 500
             ],
             'series' => [
                 [
                     'name' => 'HotelRateChart',
-                    'data' => [2, 4, 6, 10, 14, 7, 2, 9, 10, 15, 13, 18],
+                    'data' => $chartRates,
                 ],
             ],
             'xaxis' => [
-                'categories' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                'categories' => $dates,
                 'labels' => [
                     'style' => [
                         'fontFamily' => 'inherit',
@@ -63,14 +81,24 @@ class HotelRateChart extends ApexChartWidget
         ];
     }
 
+    protected function getFilters(): ?array
+    {
+        /** @var HotelsService $hotelsService */
+        $hotelsService = app()->make(HotelsService::class);
+        $hotels = $hotelsService->getAll();
+        $names = [];
+        foreach ($hotels as $hotel) {
+            $names[$hotel->name] = $hotel->name;
+        }
+
+        return $names;
+    }
+
     protected function getFormSchema(): array
     {
         return [
-
-            DatePicker::make('day_of_stay')
+            DatePicker::make('date_of_stay')
                 ->default(Carbon::today()),
-
-
         ];
     }
 }
