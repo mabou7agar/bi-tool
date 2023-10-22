@@ -30,7 +30,7 @@ class HotelsService
 
     public function getAll()
     {
-        return $this->hotelRepository->all();
+        return $this->hotelRepository->all(['*'],'name');
     }
 
     public function count(): int
