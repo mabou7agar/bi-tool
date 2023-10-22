@@ -8,7 +8,6 @@ use App\Entities\ScrapedItem;
 use App\Models\Hotel;
 use App\Services\GenerateScrapeService;
 use App\Services\HotelsService;
-use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Seeder;
 
