@@ -11,8 +11,8 @@ class GetHotelStayRateHistoriesDTO
     public function __construct(
         public string $hotelName,
         public Carbon $dateOfStay,
-        public $page = 1,
-        public $perPage = 15
+        public int $page = 1,
+        public int $perPage = 15
     ) {
     }
 }

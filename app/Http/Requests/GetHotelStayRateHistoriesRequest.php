@@ -14,7 +14,9 @@ class GetHotelStayRateHistoriesRequest extends FormRequest
     {
         return [
             'date_of_stay' => 'required|date|date_format:Y-m-d',
-            'hotel_name' => 'required|exists:hotels,name'
+            'hotel_name' => 'required|exists:hotels,name',
+            'page' => 'int',
+            'per_page' => 'int',
         ];
     }
 
@@ -23,8 +25,8 @@ class GetHotelStayRateHistoriesRequest extends FormRequest
         return new GetHotelStayRateHistoriesDTO(
             hotelName:  $this->get('hotel_name'),
             dateOfStay: Carbon::createFromFormat('Y-m-d', $this->get('date_of_stay')),
-            page:       $this->get('page', 1),
-            perPage:    $this->get('perPage', 15)
+            page:       (int) $this->get('page', 1),
+            perPage:    (int) $this->get('per_page', 15)
         );
     }
 }
