@@ -12,6 +12,7 @@ class Hotel extends Model
 {
     use UuidTrait;
 
+    public $incrementing = false;
     const HOTELS_PER_PAGE = 2;
     protected $fillable = ['name'];
 

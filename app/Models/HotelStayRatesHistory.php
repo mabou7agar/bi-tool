@@ -12,6 +12,7 @@ class HotelStayRatesHistory extends Model
 {
     use UuidTrait;
 
+    public $incrementing = false;
     protected $fillable = ['hotel_name', 'date_of_stay', 'date_scraped', 'rate_per_night', 'old_uuid'];
 
     public function hotel(): BelongsTo
