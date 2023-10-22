@@ -17,6 +17,11 @@ class HotelStayRate extends Model
 
     protected $fillable = ['hotel_name', 'date_of_stay', 'date_scraped', 'rate_per_night'];
 
+    protected $casts = [
+        'date_of_stay' => 'date',
+        'date_scraped' => 'date'
+    ];
+
     protected static function booted()
     {
         parent::booted();
@@ -39,6 +44,6 @@ class HotelStayRate extends Model
 
     public function histories(): HasMany
     {
-        return $this->hasMany(HotelStayRatesHistory::class,'old_uuid','id');
+        return $this->hasMany(HotelStayRatesHistory::class, 'old_uuid', 'id');
     }
 }
