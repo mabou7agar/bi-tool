@@ -44,3 +44,11 @@ sail up -d
 ```bash
 make setup
 ```
+Login to admin dashboard using
+```bash
+http://localhost/admin
+```
+I have made sample for api
+```bash
+https://api.postman.com/collections/2661015-3e508dd2-f7d6-439c-828b-5b059bdd7e4d?access_key=PMAT-01HDD9X5F33PK8FCA3X72AYTZM
+```

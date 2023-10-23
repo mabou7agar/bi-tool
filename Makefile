@@ -20,9 +20,6 @@ db-setup:
 # Seeds
 	$(call compose,exec,laravel.test php artisan db:seed)
 
-start:
-	$(call sail,up,-d)
-
 clear-configs-caches:
 	$(call compose,exec,laravel.test php artisan config:clear)
 	$(call compose,exec,laravel.test php artisan cache:clear)
