@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Entities;
+namespace App\Data;
 
 use Carbon\Carbon;
 
-class ScrapedItem
+class ScrapedItemData
 {
     public function __construct(
         private string $name,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Entities\ScrapedItem;
+use App\Data\ScrapedItemData;
 use App\Models\Hotel;
 use App\Models\HotelStayRate;
 use App\Models\HotelStayRatesHistory;
@@ -30,7 +30,7 @@ class HotelRateSeeder extends Seeder
         foreach ($hotels as $hotel) {
             $scrapedData = $this->generateScrapeService->generate($hotel->name, today()->subMonth());
 
-            /** @var ScrapedItem $scrapedItem */
+            /** @var ScrapedItemData $scrapedItem */
             foreach ($scrapedData as $scrapedItem) {
                 if ($scrapedItem->getDateOfStay()->lessThan(today())) {
                     $scrapedItem->setDateScraped($scrapedItem->getDateOfStay());

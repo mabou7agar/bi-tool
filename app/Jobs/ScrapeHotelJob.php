@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Entities\ScrapedItem;
+use App\Data\ScrapedItemData;
 use App\Handlers\CreateRateHistoryHandler;
 use App\Models\Hotel;
 use App\Services\GenerateScrapeService;
@@ -29,12 +29,14 @@ class ScrapeHotelJob implements ShouldQueue
 
     public function handle(HotelsService $hotelsService, GenerateScrapeService $generateScrapeService)
     {
+        //Getting Paginated Data For Hotels
         $hotels = $hotelsService->paginate($this->page, $this->perPage);
         /** @var Hotel $hotel */
         foreach ($hotels->getItems() as $hotel) {
             $scrapedData = $generateScrapeService->generate($hotel->name);
-            /** @var ScrapedItem $scrapedItem */
+            /** @var \App\Data\ScrapedItemData $scrapedItem */
             foreach ($scrapedData as $scrapedItem) {
+                //Could be enhanced to make a bulk action once to the DB to reduce number of queries needed
                 $hotel->rates()->updateOrCreate(
                     [
                         'hotel_name' => $scrapedItem->getName(),
@@ -43,6 +45,7 @@ class ScrapeHotelJob implements ShouldQueue
                     $scrapedItem->toArray()
                 );
             }
+            //Clone Hotel Rates to history table
             (new CreateRateHistoryHandler())->handle($hotel->name);
         }
     }

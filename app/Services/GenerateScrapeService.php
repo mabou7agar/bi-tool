@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Entities\ScrapedItem;
+use App\Data\ScrapedItemData;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
@@ -18,7 +18,7 @@ class GenerateScrapeService
         }
         for ($i = 0 ; $i < 365 ; $i++) {
             $result->add(
-                new ScrapedItem(
+                new ScrapedItemData(
                     name:         $hotelName,
                     dateScraped:  $startDate->copy(),
                     dateOfStay:   $startDate->copy()->addDays($i),
