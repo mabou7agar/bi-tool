@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Database\Factories\CustomerFactory;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
