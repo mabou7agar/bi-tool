@@ -15,20 +15,31 @@ Start all services from a single repository, for local use only.
 ```bash
 cd bi-tool
 ```
+2- run this command to install the composer dependencies
+```bash
+docker run --rm \
+-u "$(id -u):$(id -g)" \
+-v "$(pwd):/var/www/html" \
+-w /var/www/html \
+laravelsail/php82-composer:latest \
+composer install --ignore-platform-reqs
+```
 
-2- run laravel sail command to run full env in docker:
+2- run this command to use sail command:
 ```bash
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
 ```
 
 3- run laravel sail command to run full env in docker:
 ```bash
-sail up
+sail up -d
 ```
 
-4- to run queue 
+4- we need to access the docker image of our application
 ```bash
- sail artisan queue:work  
+docker exec -it <mycontainer> bash
 ```
+
+5- we need to migrate our DB
 
 php artisan jwt:secret
