@@ -35,7 +35,13 @@ class ScrapeHotelJob implements ShouldQueue
             $scrapedData = $generateScrapeService->generate($hotel->name);
             /** @var ScrapedItem $scrapedItem */
             foreach ($scrapedData as $scrapedItem) {
-                    $hotel->rates()->updateOrCreate($scrapedItem->toArray());
+                $hotel->rates()->updateOrCreate(
+                    [
+                        'hotel_name' => $scrapedItem->getName(),
+                        'date_of_stay' => $scrapedItem->getDateOfStay()->format('Y-m-d')
+                    ],
+                    $scrapedItem->toArray()
+                );
             }
             (new CreateRateHistoryHandler())->handle();
         }
