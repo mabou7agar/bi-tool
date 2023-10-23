@@ -67,7 +67,7 @@ class HotelStayRateResource extends Resource
                                 );
                         })
                 ]
-            )->defaultSort('date_scraped', 'asc');
+            )->defaultSort('date_scraped', 'desc');
     }
 
     public static function getRelations(): array
