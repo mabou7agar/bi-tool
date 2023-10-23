@@ -26,7 +26,7 @@ class CreateRateHistoryHandler
         $count = HotelStayRatesHistory::where('date_scraped', $today)->where('date_of_stay',$today)->count();
         if ($count < 1) {
             DB::statement(
-                "INSERT INTO {$historyTable} (id,hotel_name,date_of_stay,date_scraped,rate_per_night,old_uuid,created_at,updated_at) SELECT
+                "INSERT IGNORE INTO {$historyTable} (id,hotel_name,date_of_stay,date_scraped,rate_per_night,old_uuid,created_at,updated_at) SELECT
             uuid(),hotel_name,date_of_stay,date_scraped,rate_per_night,id,'{$now}','{$now}' from {$rateTable}"
             );
         }
