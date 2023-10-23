@@ -25,10 +25,15 @@ class HotelRateSeeder extends Seeder
         /** @var Hotel $hotel */
         foreach ($hotels as $hotel) {
             $scrapedData = $this->generateScrapeService->generate($hotel->name, now()->subMonth());
-            $hotel->rates()->delete();
+
             /** @var ScrapedItem $scrapedItem */
             foreach ($scrapedData as $scrapedItem) {
-                $scrapedItem->setDateScraped($scrapedItem->getDateOfStay());
+                if ($scrapedItem->getDateOfStay()->lessThan(today())) {
+                    $scrapedItem->setDateScraped($scrapedItem->getDateOfStay());
+                } else {
+                    $scrapedItem->setDateScraped(today());
+                }
+
                 $rate = $hotel->rates()->create($scrapedItem->toArray());
                 $period = CarbonPeriod::create(now()->subMonth(), now());
                 foreach ($period as $date) {

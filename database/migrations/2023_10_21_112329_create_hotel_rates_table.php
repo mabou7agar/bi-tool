@@ -17,6 +17,10 @@ return new class extends Migration
             $table->date('date_of_stay')->index('date_of_stay_idx');
             $table->date('date_scraped')->index('date_scraped_idx');
             $table->unsignedDouble('rate_per_night');
+            $table->unique([
+                               'hotel_name',
+                               'date_of_stay',
+                           ], 'unique_rate_record_rates');
             $table->timestamps();
         });
     }

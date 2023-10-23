@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,6 +17,11 @@ return new class extends Migration
             $table->date('date_scraped')->index('date_scraped_idx');
             $table->unsignedDouble('rate_per_night');
             $table->uuid('old_uuid')->index('old_uuid_idx');
+            $table->unique([
+                               'hotel_name',
+                               'date_of_stay',
+                               'date_scraped'
+                           ], 'unique_rate_record');
             $table->timestamps();
         });
     }
