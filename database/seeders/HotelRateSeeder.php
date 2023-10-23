@@ -6,6 +6,8 @@ namespace Database\Seeders;
 
 use App\Entities\ScrapedItem;
 use App\Models\Hotel;
+use App\Models\HotelStayRate;
+use App\Models\HotelStayRatesHistory;
 use App\Services\GenerateScrapeService;
 use App\Services\HotelsService;
 use Carbon\CarbonPeriod;
@@ -21,10 +23,12 @@ class HotelRateSeeder extends Seeder
 
     public function run(): void
     {
+        HotelStayRate::query()->truncate();
+        HotelStayRatesHistory::query()->truncate();
         $hotels = $this->hotelsService->getAll();
         /** @var Hotel $hotel */
         foreach ($hotels as $hotel) {
-            $scrapedData = $this->generateScrapeService->generate($hotel->name, now()->subMonth());
+            $scrapedData = $this->generateScrapeService->generate($hotel->name, today()->subMonth());
 
             /** @var ScrapedItem $scrapedItem */
             foreach ($scrapedData as $scrapedItem) {
@@ -35,9 +39,9 @@ class HotelRateSeeder extends Seeder
                 }
 
                 $rate = $hotel->rates()->create($scrapedItem->toArray());
-                $period = CarbonPeriod::create(now()->subMonth(), now());
+                $period = CarbonPeriod::create(today()->subMonth(), today()->addDay());
                 foreach ($period as $date) {
-                    if ($scrapedItem->getDateOfStay()->lessThan($date)) {
+                    if ($date->greaterThan($scrapedItem->getDateOfStay())) {
                         break;
                     }
                     $rateArray = $rate->toArray();
