@@ -4,6 +4,7 @@
 1. This Project for scraping Hotels rate per night and store there history for rate comparing
 2. Every day, there is an ingestion service that runs at 1AM EST. for whole hotel rate from today to next year ( Using Cron Job and Queue )
 3. There is a Dashboard has Line Chart and Paginated Table to Show the Changes in rate for every hotel for specified date
+4. I have assumed That Hotel Scraping has no relation to the number of customers exists
 
 #How ot works
 1. Scrape Hotels data every day at 1 AM EST using Laravel Scheduler
