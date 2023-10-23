@@ -30,16 +30,17 @@ composer install --ignore-platform-reqs
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
 ```
 
-3- run laravel sail command to run full env in docker:
+3- this will build all needed containers:
+```bash
+sail build --no-cache
+```
+
+4- this will create and start the containers:
 ```bash
 sail up -d
 ```
 
-4- we need to access the docker image of our application
+5- run this command to setup the seeders and all needed migrations to your system
 ```bash
-docker exec -it <mycontainer> bash
+make setup
 ```
-
-5- we need to migrate our DB
-
-php artisan jwt:secret
