@@ -31,7 +31,12 @@
 ```bash
 cd bi-tool
 ```
-2- run this command to install the composer dependencies
+2- if you have Composer installed with PHP 8.2 you can just run 
+```bash
+composer install
+```
+
+Or you run this command to install the composer dependencies using small docker image
 ```bash
 docker run --rm \
 -u "$(id -u):$(id -g)" \
@@ -60,7 +65,7 @@ sail up -d
 ```bash
 make setup
 ```
-#Dashboard
+##Dashboard
 While my main stack is laravel is used `Filament php` Dashboard to support with simple FE side
 you can access it using
 ```bash
@@ -70,13 +75,13 @@ Default Users
 - Emails : c1@bi.com , c2@bi.com , c3@bi.com , c4@bi.com
 - Password : password
 
-#Api
+##Api
 I have made sample for api you can download it from postman folder at repo
 ```bash
 https://api.postman.com/collections/2661015-3e508dd2-f7d6-439c-828b-5b059bdd7e4d?access_key=PMAT-01HDD9X5F33PK8FCA3X72AYTZM
 ```
 
-#Structure
+##Structure
 All application files will be under app folder we have the following
 1. **Console**
     1. Contains Custom Commands to be called like php artisan ScrapeHotelsCommand
@@ -124,7 +129,7 @@ All application files will be under app folder we have the following
 
 14. **Routes** - The route is a way of creating a request URL for your application
 
-# What's Happening With Docker File
+## What's Happening With Docker File
 1. Setting Server Timezone to EST
 2. Install Cron Job
 3. Initialize Scheduler ( That schedule for laravel use cronjob )
@@ -134,7 +139,7 @@ All application files will be under app folder we have the following
 7. Install MySql Client
 8. Copy php.ini ( Has php configurations ) and supervisord.conf ( Described Below ) to image
 
-# What is the use of Supervisord
+## What is the use of Supervisord
 The main purpose of using Supervisord that make sure that process never die and all programs assigned always alive like:
 1. [program:php] run the php service at port 80
 2. [program:cron] run the cron job
@@ -145,11 +150,11 @@ you can find more about it
 https://filamentphp.com/docs
 ```
 
-#Telescope
+## Telescope
 I Have installed telescope for tracing and debugging purpose you can reach it using
 ```bash
 http://localhost/telescope
 ```
 
-#The End xD
+## The End xD
 This is a sample to produce the technical abilities please don't hasitate to ask me if there is any info needed
