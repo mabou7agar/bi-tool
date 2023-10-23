@@ -39,7 +39,7 @@ class HotelRateSeeder extends Seeder
                 }
 
                 $rate = $hotel->rates()->create($scrapedItem->toArray());
-                $period = CarbonPeriod::create(today()->subMonth(), today()->addDay());
+                $period = CarbonPeriod::create(today()->subMonth(), today());
                 foreach ($period as $date) {
                     if ($date->greaterThan($scrapedItem->getDateOfStay())) {
                         break;

@@ -43,7 +43,7 @@ class ScrapeHotelJob implements ShouldQueue
                     $scrapedItem->toArray()
                 );
             }
-            (new CreateRateHistoryHandler())->handle();
+            (new CreateRateHistoryHandler())->handle($hotel->name);
         }
     }
 }
