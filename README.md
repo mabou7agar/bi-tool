@@ -31,7 +31,12 @@
 ```bash
 cd bi-tool
 ```
-2- if you have Composer installed with PHP 8.2 you can just run 
+2- Clone Env Config
+```bash
+cp .env.example .env
+```
+
+3- if you have Composer installed with PHP 8.2 you can just run 
 ```bash
 composer install
 ```
@@ -46,22 +51,22 @@ laravelsail/php82-composer:latest \
 composer install --ignore-platform-reqs
 ```
 
-3- run this command to use sail command:
+4- run this command to use sail command:
 ```bash
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
 ```
 
-4- this will build all needed containers:
+5- this will build all needed containers:
 ```bash
 sail build --no-cache
 ```
 
-5- this will create and start the containers:
+6- this will create and start the containers:
 ```bash
 sail up -d
 ```
 
-6- run this command to setup the seeders and all needed migrations to your system
+7- run this command to setup the seeders and all needed migrations to your system
 ```bash
 make setup
 ```
