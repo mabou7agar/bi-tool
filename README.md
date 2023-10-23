@@ -25,22 +25,22 @@ laravelsail/php82-composer:latest \
 composer install --ignore-platform-reqs
 ```
 
-2- run this command to use sail command:
+3- run this command to use sail command:
 ```bash
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
 ```
 
-3- this will build all needed containers:
+4- this will build all needed containers:
 ```bash
 sail build --no-cache
 ```
 
-4- this will create and start the containers:
+5- this will create and start the containers:
 ```bash
 sail up -d
 ```
 
-5- run this command to setup the seeders and all needed migrations to your system
+6- run this command to setup the seeders and all needed migrations to your system
 ```bash
 make setup
 ```
