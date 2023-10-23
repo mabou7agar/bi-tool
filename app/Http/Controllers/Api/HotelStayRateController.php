@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\PaginationInfo;
 use App\Http\Requests\GetHotelStayRateHistoriesRequest;
 use App\Presenters\GetHotelStayRateHistoriesPresenter;
 use App\Services\HotelStayRateService;
-use App\Traits\PaginationInfo;
 use Illuminate\Http\JsonResponse;
 
 class HotelStayRateController extends Controller
