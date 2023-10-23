@@ -66,6 +66,10 @@ you can access it using
 ```bash
 http://localhost/admin
 ```
+Default Users
+- Emails : c1@bi.com , c2@bi.com , c3@bi.com , c4@bi.com
+- Password : password
+
 #Api
 I have made sample for api you can download it from postman folder at repo
 ```bash
