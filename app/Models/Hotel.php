@@ -20,4 +20,9 @@ class Hotel extends Model
     {
         return $this->hasMany(HotelStayRate::class, 'hotel_name', 'name');
     }
+
+    public function histories(): HasMany
+    {
+        return $this->hasMany(HotelStayRatesHistory::class, 'hotel_name', 'name');
+    }
 }
