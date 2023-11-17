@@ -161,5 +161,8 @@ I Have installed telescope for tracing and debugging purpose you can reach it us
 http://localhost/telescope
 ```
 
+You Can See My Expalnation using loom link below
+https://www.loom.com/share/ae46f01413cb46e5870aa3c8e655f19a
+
 ## The End xD
 This is a sample to produce the technical abilities please don't hasitate to ask me if there is any info needed
